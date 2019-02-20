@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AF Lec</title>
+</head>
+<body>
+
+<script>
+
+    function Vehicle(type) {
+        this.type = type;
+        Vehicle.INSTANCE_COUNT++;
+
+        /*this.getType = function () {
+            return this.type;
+        }*/
+    }
+
+    Vehicle.INSTANCE_COUNT = 0;
+
+    var vehicle = new Vehicle("Nisan");
+
+    Vehicle.prototype.getType = function () {
+        return this.type;
+    }
+    console.log(vehicle.getType());
+
+    function Car(type) {
+        Vehicle.call(this,type);
+    }
+
+    Car.prototype = Vehicle.prototype;
+    Car.prototype = Object.create(Vehicle.prototype);
+    Car.prototype.Constructor = Car;
+
+    var car1 = new Car("Toyota");
+    var car2 = new Car("Benze");
+
+    console.log(car1.getType());
+    console.log(car2.getType());
+    console.log(Vehicle.INSTANCE_COUNT);
+
+    var name = "David";
+
+    function printName() {
+        console.log(this.name);
+    }
+
+    printName();
+
+    var user = {
+        name : "Peter",
+        getName : function () {
+            return function () {
+                console.log(this.name);
+            }
+        }
+    }
+
+    console.log(this);
+    user.getName();
+
+    var execute = user.getName();
+    execute();
+
+    var boundedExecution = execute.bind(user);
+
+    boundedExecution();
+
+
+
+</script>
+
+</body>
+</html>
